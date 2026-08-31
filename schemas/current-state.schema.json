@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://heptazero.local/schemas/current-state.schema.json",
+  "title": "CurrentState",
+  "type": "object",
+  "required": ["version", "generatedAt", "logicalDate", "timezone", "currentMinute", "currentActivities", "recentFacts", "plannedTodos", "activeProjects", "currentEnergyPhase", "nextRhythm", "sourceSummary"],
+  "properties": {
+    "version": { "const": 1 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "logicalDate": { "type": "string", "format": "date" },
+    "timezone": { "type": "string" },
+    "currentMinute": { "type": "integer", "minimum": 0 },
+    "currentActivities": { "type": "array", "items": { "$ref": "life-event.schema.json" } },
+    "recentFacts": { "type": "array", "items": { "$ref": "life-event.schema.json" } },
+    "plannedTodos": { "type": "array", "items": { "$ref": "life-event.schema.json" } },
+    "activeProjects": { "type": "array", "items": { "$ref": "source-document.schema.json" } },
+    "currentEnergyPhase": { "type": ["object", "null"] },
+    "nextRhythm": { "type": ["object", "null"] },
+    "sourceSummary": {
+      "type": "object",
+      "required": ["branchTimelineEvents", "selfDocuments", "projectDocuments"],
+      "properties": {
+        "branchTimelineEvents": { "type": "integer", "minimum": 0 },
+        "selfDocuments": { "type": "integer", "minimum": 0 },
+        "projectDocuments": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

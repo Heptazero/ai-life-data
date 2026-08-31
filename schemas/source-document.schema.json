@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://heptazero.local/schemas/source-document.schema.json",
+  "title": "SourceDocument",
+  "type": "object",
+  "required": ["version", "source", "path", "title", "modifiedAt", "aliases"],
+  "properties": {
+    "version": { "const": 1 },
+    "source": { "enum": ["obsidian-self", "obsidian-project"] },
+    "path": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "modifiedAt": { "type": "string", "format": "date-time" },
+    "type": { "type": "string" },
+    "status": { "type": "string" },
+    "started": { "type": "string" },
+    "color": { "type": "string" },
+    "aliases": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

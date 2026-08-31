@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "timezone": "Asia/Shanghai",
+  "dayBoundaryHour": 2,
+  "dataDir": ".",
+  "sources": {
+    "branchTimeline": {
+      "stateFile": "/absolute/path/to/your-vault/99_assets/branch-timeline/state.json",
+      "settingsFile": "/absolute/path/to/your-vault/.obsidian/plugins/branch-timeline-hz/data.json"
+    },
+    "obsidian": {
+      "vaultPath": "/absolute/path/to/your-vault",
+      "selfRoots": ["20_self"],
+      "projectTypes": []
+    }
+  }
+}
