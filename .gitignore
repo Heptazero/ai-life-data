@@ -3,3 +3,5 @@ dist/
 coverage/
 .DS_Store
 life.config.local.json
+sources/
+derived/

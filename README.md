@@ -18,6 +18,8 @@ Obsidian Markdown 元数据 ───┘
 - `derived/current-state.json`：当前活动、今日待办、最近事实、活跃项目、节律与下一个固定时间。
 - `schemas/`：与具体模型无关的数据契约。
 
+`sources/` 与 `derived/` 是本机派生产物，默认不提交 Git；换模型不受影响，只要模型能读取这个目录即可。
+
 ## 本地使用
 
 需要 Node.js 22 或更高版本。
