@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { loadConfig } from "./config.js";
 import type { CurrentState } from "./domain/current-state.js";
@@ -20,6 +21,7 @@ function help(): void {
   life sync [--config PATH]    读取数据源并刷新标准文件
   life status [--config PATH]  查看当前状态摘要
   life context [--config PATH] 输出当前状态 JSON
+  life brief [--config PATH]   输出给模型阅读的当前状态
 
 配置文件默认读取 life.config.local.json，也可设置 AI_LIFE_CONFIG。`);
 }
@@ -60,6 +62,18 @@ async function main(): Promise<void> {
     const result = await syncLifeData(config);
     console.log(`已同步 ${result.branchTimelineEvents} 条时间线事件、${result.selfDocuments} 份 self 索引、${result.projectDocuments} 份项目索引。`);
     console.log(`当前状态：${result.currentStateFile}`);
+    console.log(`模型入口：${result.currentContextFile}`);
+    return;
+  }
+
+  if (command === "brief") {
+    const briefFile = path.join(config.resolvedDataDir, "derived", "current-context.md");
+    try {
+      process.stdout.write(await readFile(briefFile, "utf8"));
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") throw new Error("还没有模型入口。先运行 life sync。");
+      throw error;
+    }
     return;
   }
 

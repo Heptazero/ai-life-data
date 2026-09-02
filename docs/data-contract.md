@@ -48,3 +48,5 @@
 ## 当前状态
 
 `derived/current-state.json` 是快速入口，正式约束见 `schemas/current-state.schema.json`。它不是历史真相，只是某次 `life sync` 的可重建快照。
+
+`derived/current-context.md` 是同一快照的人类可读版本。新模型先读它，再按其中路径读取结构化状态或原始文件；其中不包含 self 正文或模型推断。

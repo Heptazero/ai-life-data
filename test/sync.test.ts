@@ -82,4 +82,9 @@ test("同步生成事件、Obsidian 索引和当前状态", async () => {
   assert.equal(eventLines.length, 2);
   const selfIndex = await readFile(path.join(root, "output", "sources", "obsidian", "self-index.jsonl"), "utf8");
   assert.ok(!selfIndex.includes("正文不进入索引"));
+  const context = await readFile(result.currentContextFile, "utf8");
+  assert.match(context, /# 当前个人状态/);
+  assert.match(context, /实现适配器/);
+  assert.match(context, /21_project\/实验\.md/);
+  assert.ok(!context.includes("正文不进入索引"));
 });

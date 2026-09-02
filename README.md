@@ -16,6 +16,7 @@ Obsidian Markdown 元数据 ───┘
 - `sources/obsidian/self-index.jsonl`：self 文件索引，不复制正文。
 - `sources/obsidian/project-index.jsonl`：项目文件索引，不复制正文。
 - `derived/current-state.json`：当前活动、今日待办、最近事实、活跃项目、节律与下一个固定时间。
+- `derived/current-context.md`：新模型或新对话的首读入口。
 - `schemas/`：与具体模型无关的数据契约。
 
 `sources/` 与 `derived/` 是本机派生产物，默认不提交 Git；换模型不受影响，只要模型能读取这个目录即可。
@@ -36,13 +37,15 @@ npm run life -- doctor
 npm run life -- sync
 npm run life -- status
 npm run life -- context
+npm run life -- brief
 ```
 
 任何模型接手时，优先读取：
 
-1. `derived/current-state.json`
-2. 当前任务涉及的 `sources/` 记录
-3. 索引指向的原始 Obsidian 文件
+1. `derived/current-context.md`
+2. `derived/current-state.json`
+3. 当前任务涉及的 `sources/` 记录
+4. 索引指向的原始 Obsidian 文件
 
 不要把某个聊天线程当作唯一记忆。可持久化事实应落到来源文件，派生文件随时可以重建。
 

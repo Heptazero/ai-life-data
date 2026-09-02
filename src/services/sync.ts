@@ -3,8 +3,9 @@ import { readBranchTimeline } from "../adapters/branch-timeline.js";
 import { readObsidian } from "../adapters/obsidian.js";
 import type { LifeConfig } from "../config.js";
 import type { LifeEvent } from "../domain/event.js";
-import { readJsonIfExists, removeFile, writeJson, writeJsonl } from "../utils/files.js";
+import { readJsonIfExists, removeFile, writeJson, writeJsonl, writeTextAtomic } from "../utils/files.js";
 import { buildCurrentState } from "./current-state.js";
+import { renderContextBrief } from "./context-brief.js";
 
 interface SourceManifest {
   version: 1;
@@ -18,6 +19,7 @@ export interface SyncResult {
   selfDocuments: number;
   projectDocuments: number;
   currentStateFile: string;
+  currentContextFile: string;
 }
 
 function eventLogicalDate(event: LifeEvent): string {
@@ -75,12 +77,15 @@ export async function syncLifeData(config: LifeConfig, now = new Date()): Promis
   const currentState = buildCurrentState(config, now, timeline, obsidian);
   const currentStateFile = path.join(config.resolvedDataDir, "derived", "current-state.json");
   await writeJson(currentStateFile, currentState);
+  const currentContextFile = path.join(config.resolvedDataDir, "derived", "current-context.md");
+  await writeTextAtomic(currentContextFile, renderContextBrief(currentState));
 
   return {
     generatedAt,
     branchTimelineEvents: timeline?.events.length ?? 0,
     selfDocuments: obsidian?.selfDocuments.length ?? 0,
     projectDocuments: obsidian?.projectDocuments.length ?? 0,
-    currentStateFile
+    currentStateFile,
+    currentContextFile
   };
 }
